@@ -9,23 +9,23 @@
         {
             "path": "pages/user/index",
             "style": {
-                "navigationBarTitleText": "uni-app",
+                "navigationBarTitleText": "uni-app"
             }
         }
     ],
-    "tabBar": {
-        "custom": true, // 关键配置：启用自定义TabBar
-        "list": [
-            {
-                "pagePath": "pages/home/index",
-                "text": "首页"
-            },
-            {
-                "pagePath": "pages/user/user",
-                "text": "我的"
-            }
-        ]
-    },
+    // "tabBar": {
+    //     "custom": true, // 关键配置：启用自定义TabBar
+    //     "list": [
+    //         {
+    //             "pagePath": "pages/home/index",
+    //             "text": "首页"
+    //         },
+    //         {
+    //             "pagePath": "pages/user/user",
+    //             "text": "我的"
+    //         }
+    //     ]
+    // },
     "globalStyle": {
         "navigationBarTextStyle": "black",
         "navigationBarTitleText": "uni-app",

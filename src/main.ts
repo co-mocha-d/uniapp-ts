@@ -4,7 +4,7 @@ import App from "./App.vue";
 import { createPinia } from "pinia";
 // pinia状态管理持久化插件
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
-import 'virtual:uno.css';
+// import 'virtual:uno.css';
 // main.js，注意要在use方法之后执行
 import uviewPlus, { setConfig } from '@/uni_modules/uview-plus'
 

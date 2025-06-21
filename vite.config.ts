@@ -11,7 +11,7 @@ console.log("uni function:", uni);
 export default defineConfig({
     plugins: [
         uni(),
-        UnoCSS(),
+        // UnoCSS(),
         AutoImport({
             imports: ["vue", "uni-app", "pinia"],
             dts: true,

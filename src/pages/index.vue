@@ -1,7 +1,7 @@
 <template>
-    <view class="page-container">
+    <view class="page-container-default">
         <!-- 状态栏占位 -->
-        <up-navbar title="个人中心" :autoBack="false" placeholder>
+        <up-navbar title="个人中心" :autoBack="false" :fixed="false">
         </up-navbar>
 
         <view class="page-warp">
@@ -10,11 +10,9 @@
             <User v-if="currentName == 'user'"></User>
 
         </view>
-        <!-- <view style="height: 70rpx;"> -->
+
         <!-- 其他页面内容 -->
-        <co-tabbar v-model:name="currentName" :activeColor="'#FF5722'" :inactiveColor="'#999999'"
-            :safeAreaInsetBottom="true" />
-        <!-- </view> -->
+        <co-tabbar v-model:name="currentName" :safeAreaInsetBottom="true" />
 
     </view>
 </template>
@@ -29,10 +27,15 @@
     const currentName = ref('home')
 </script>
 <style lang="scss" scoped>
-    .page-container {
+    view {
+        box-sizing: border-box;
+    }
+
+    .page-container-default {
         display: flex;
         flex-direction: column;
         height: 100vh;
+        width: 100vw;
         overflow: hidden;
 
 

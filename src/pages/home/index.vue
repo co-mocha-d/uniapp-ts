@@ -3,10 +3,13 @@
         <view>home</view>
         <view class="scroll-wrap">
             <scroll-view scroll-y style="height: 100%;">
-                <view style="height: 300rpx;">123456</view>
-                <view style="height: 300rpx;">123456</view>
-                <view style="height: 300rpx;">123456</view>
-                <view style="height: 300rpx;">123456</view>
+                <co-input placeholder="请输入嘿嘿" :data="['input前面的插槽']" ref="myInputRef" v-model:modelValue="content"
+                    @change="inputChange">
+                    <template #prefix="{row}">{{row || ''}}{{2312456}}</template>
+                </co-input>
+
+                <view @click="clickHandle">点击我</view>
+
                 <view>底部</view>
 
             </scroll-view>
@@ -18,6 +21,19 @@
     import { useUserStore } from '@/store'
     const userStore = useUserStore()
 
+    const myInputRef = ref(null)
+
+    const content = ref('哈哈哈')
+
+    const clickHandle = () => {
+        console.log(myInputRef.value)
+        myInputRef.value?.onClear()
+    }
+
+    const inputChange = (val) => {
+        console.log('inputChange', val)
+    }
+
     const currentComponent = ref(null)
     const title = ref('Hello')
 </script>
@@ -27,6 +43,7 @@
         display: flex;
         flex-direction: column;
         height: 100%;
+        overflow: hidden;
 
         .scroll-wrap {
             flex: 1;
