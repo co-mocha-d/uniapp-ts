@@ -9,7 +9,7 @@
                 </co-input>
 
                 <view @click="clickHandle">点击我</view>
-
+                <view @click="goOther">跳转</view>
                 <view>底部</view>
 
             </scroll-view>
@@ -32,6 +32,13 @@
 
     const inputChange = (val) => {
         console.log('inputChange', val)
+    }
+
+    const goOther = () => {
+        uni.navigateTo({
+            url: '/pages/pagesOther/index'
+        })
+
     }
 
     const currentComponent = ref(null)

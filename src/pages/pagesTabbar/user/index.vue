@@ -19,6 +19,23 @@
     const title = ref('Hello')
 
 
+    onMounted(() => {
+        let url = uni.$urls.common.getArticle
+        console.log(uni.$urls.common.getArticle)
+        uni.$doHttp.get(url, {
+
+            current: 1,
+            size: 10,
+            status: true
+
+        }).then((res) => {
+
+        }).catch((err) => {
+            console.log(err)
+        })
+    })
+
+
 </script>
 
 <style>

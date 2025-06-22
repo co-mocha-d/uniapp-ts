@@ -19,7 +19,7 @@ const useUserStore = defineStore("user", {
         // 当前用户是否时登录
         isLogin: false,
         // 用户token数据
-        token: '用户token数据',
+        token: 'token',
         // 用户信息、配置信息
         userInfo: {},
         // 当前访问的店铺信息

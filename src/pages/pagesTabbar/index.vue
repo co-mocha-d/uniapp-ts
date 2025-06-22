@@ -18,8 +18,8 @@
 </template>
 
 <script setup lang="ts">
-    import Home from '@/pages/home/index';
-    import User from '@/pages/user/index';
+    import Home from './home/index';
+    import User from './user/index';
     import { useUserStore } from '@/store'
     const userStore = useUserStore()
     const title = ref('Hello')
