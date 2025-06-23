@@ -3,6 +3,28 @@ import {
     dispatchRequest,
     jsonpRequest
 } from "./utils.js";
+import $cache from '../hdCache.js'
+import getType from '../getType.js'
+import deepCompare from '../equal.js'
+
+/**
+ * 对象深拷贝
+ */
+export function deepClone (obj) {
+    let objClone = Array.isArray(obj) ? [] : {}
+    if (obj && typeof obj === 'object') {
+        for (let key in obj) {
+            if (obj[key] && typeof obj[key] === 'object') {
+                objClone[key] = deepClone(obj[key])
+            } else {
+                objClone[key] = obj[key]
+            }
+        }
+    }
+    return objClone
+}
+
+
 export default class request {
     constructor(options) {
         //请求公共地址
@@ -72,6 +94,8 @@ export default class request {
     }
     //接口请求方法
     async request (data) {
+        console.log('data=====', data)
+
         // 请求数据
         let requestInfo,
             // 是否运行过请求开始钩子
@@ -106,12 +130,63 @@ export default class request {
                     }
                 }
             }
+
+
+
+            const { cache = false, refreshCache = false, url, data: params } = data
+            console.log('params===', params)
+
+            /* 在此处拦截 优先读取缓存**/
+            let cacheUrl = url
+            console.log('cacheUrl===', cacheUrl)
+            let cacheParams = deepClone(params)
+            // cacheParams = qs.stringify({ encrypt_data: EncryptAES(cacheParams) }, { arrayFormat: 'indices', })
+
+            if (!refreshCache && (cache || getType(cache) === 'number')) {
+                let cacheData = $cache.get(cacheUrl)
+
+                console.log('cacheData ====', cacheData)
+                let cacheList = $cache.get('co_cache_url') || []
+                let newCacheList = cacheList.filter(v => v !== cacheUrl)
+                newCacheList.push(cacheUrl)
+                $cache.set('co_cache_url', newCacheList)
+                if (cacheData && getType(cacheData) === 'array') {
+                    let targetData = cacheData.filter(v => {
+                        return v.params && deepCompare(v.params, cacheParams)
+                    })
+                    console.log('targetData===', targetData)
+
+                    if (targetData && targetData.length > 0) {
+                        let resultData = {}
+                        // if (typeof targetData[0]['data'] === 'string') {
+                        //     let dataAES = DecryptAES(targetData[0]['data'].trim())
+                        //     resultData = JSON.parse(JSON.stringify(dataAES))
+                        // } else {
+                        resultData = targetData[0]['data']
+                        // }
+
+                        console.log('resultData===', resultData)
+
+                        console.log(`%c [${cacheUrl}请求参数]`, 'font-size:13px; background:#fff; color:#3498db;', params)
+                        console.log(`%c [${cacheUrl}缓存数据]`, 'font-size:13px; background:#fff; color:#3498db;', resultData)
+                        // resolve(resultData || [])
+                        // return
+                        return Promise.resolve(resultData);
+                    }
+                }
+            }
+
+
+
+
+
             let requestResult = {};
             if (requestInfo.method == "JSONP") {
                 requestResult = await jsonpRequest(requestInfo);
             } else {
                 requestResult = await dispatchRequest(requestInfo);
             }
+
             //是否用外部的数据处理方法
             if (requestInfo.isFactory && this.dataFactory) {
                 //数据处理
@@ -119,8 +194,37 @@ export default class request {
                     ...requestInfo,
                     response: requestResult
                 });
+
+                console.log('result===', result)
+
+
+                if (cache || getType(cache) === 'number') {
+
+                    if (refreshCache) {
+                        $cache.remove(cacheUrl)
+                    }
+                    // 缓存
+                    let cacheData = $cache.get(cacheUrl)
+                    if (cacheData && getType(cacheData) == 'array') {
+                        cacheData.push({
+                            params: cacheParams,
+                            data: result || ''
+                        })
+                        $cache.set(cacheUrl, cacheData, getType(cache) === 'number' ? cache : CACHE_LIVETIME)
+                    } else {
+                        cacheData = [{
+                            params: cacheParams,
+                            data: result || ''
+                        }]
+                        $cache.set(cacheUrl, cacheData, getType(cache) === 'number' ? cache : CACHE_LIVETIME)
+                    }
+                }
+
+
+
                 return Promise.resolve(result);
             } else {
+                console.log('requestResult===', requestResult)
                 return Promise.resolve(requestResult);
             }
         } catch (err) {

@@ -23,13 +23,13 @@
         let url = uni.$urls.common.getArticle
         console.log(uni.$urls.common.getArticle)
         uni.$doHttp.get(url, {
-
             current: 1,
-            size: 10,
+            size: 5,
             status: true
-
+        }, {
+            cache: 1 * 60,
         }).then((res) => {
-
+            console.log('res-----', res)
         }).catch((err) => {
             console.log(err)
         })

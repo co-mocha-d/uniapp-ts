@@ -13,6 +13,8 @@ import { useUserStore } from '@/store/index' // 导入pinia状态管理配置
 
 // 全局配置的请求域名
 const baseUrl = process.env.VITE_BASE_API || import.meta.env.VITE_BASE_API; // 接口地址域名
+const CACHE_LIVETIME = 60 // 缓存时间
+
 /**
  * 清除字符串的空格
  * @param {String} str 传入的字符串
@@ -49,6 +51,7 @@ let $http = new request({
 //请求开始拦截器
 $http.requestStart = function (options) {
     console.log('请求开始拦截器', options)
+
 
     const userStore = useUserStore() // pinia用户模块数据对象
     if (options.load) {
@@ -130,7 +133,7 @@ $http.dataFactory = async function (res) {
             httpData = JSON.parse(httpData);
         }
         //判断数据是否请求成功
-        if (httpData.success || httpData.status == 200) {
+        if (httpData.code == '0') {
             // 返回正确的结果(then接受数据)
             console.log(`🤪[ 请求地址 ] %c${res?.url}`, 'background: green; padding:5px 8px; border-radius: 5px;')
             console.log('🤪[ 返回结果 ]', httpData.data)
@@ -164,12 +167,12 @@ $http.dataFactory = async function (res) {
 $http.requestError = function (e, data) {
     if (e.statusCode === 0) {
         setTimeout(() => {
-            uni.$toast(e?.errMsg)
+            uni.$u.toast(e?.errMsg)
         }, 100)
         throw e;
     } else {
         setTimeout(() => {
-            uni.$toast("网络错误 请检查一下网络")
+            uni.$u.toast("网络错误 请检查一下网络")
         }, 100)
     }
 }
