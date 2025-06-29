@@ -15,4 +15,10 @@
 <style lang="scss">
     /* uview组件库样式 */
     @import "@/uni_modules/uview-plus/index.scss";
+    /*每个页面公共css */
+    @import 'css/common.scss';
+    /* scss function */
+    @import 'css/function.scss';
+    /* scss 颜色 */
+    @import 'css/colors.scss';
 </style>

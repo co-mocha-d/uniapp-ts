@@ -1,0 +1,31 @@
+// 公共颜色
+$colors: (
+  '3': #333333,
+  '6': #666666,
+  '9': #999999,
+  'b': #0082ff,
+  'b4': #4092FC,
+  'f': #ffffff,
+  'f5': #f5f5f5,
+  '0': #000000,
+  'r': #F54E52,
+  'g': #34995D,
+  'y': #F5A82F,
+  'f8': #F8F8F8,
+  'cd': #cdcdcd,
+  'ccc': #cccccc,
+  'c': #cccccc,
+);
+@each $name, $color in $colors {
+  .fc#{$name} {
+    color: $color;
+  }
+
+  .bg#{$name} {
+    background-color: $color;
+  }
+
+  .border#{$name} {
+    border-color: $color;
+  }
+}

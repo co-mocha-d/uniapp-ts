@@ -1,0 +1,313 @@
+// 公共样式scss文件
+.content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background-color: #f5f5f5;
+  box-sizing: border-box;
+  min-height: 100vh;
+  /* #ifdef H5 */
+  min-height: calc(100vh - 44px + env(safe-area-inset-top));
+  /* #endif */
+  padding-bottom: max(env(safe-area-inset-bottom), 20rpx);
+}
+uni-modal {
+  z-index: 999999 !important;
+}
+
+.fw-400 {
+  font-weight: 400;
+}
+
+.fwb {
+  font-weight: bold;
+}
+
+.fw-500 {
+  font-weight: 500;
+}
+
+.fw-600 {
+  font-weight: 600;
+}
+
+// flex布局
+.flex {
+  display: flex;
+}
+
+// 水平居中
+.flex-a-center {
+  display: flex;
+  align-items: center;
+}
+// 横行居中
+.flex-j-center {
+  display: flex;
+  justify-content: center;
+}
+// 横向 靠右
+.flex-j-end {
+  display: flex;
+  justify-content: flex-end;
+}
+// 横向 靠左
+.flex-j-start {
+  display: flex;
+  justify-content: flex-start;
+}
+// 自身居中父布局
+.flex-s-center {
+  display: flex;
+  align-self: center;
+}
+
+.flex-a-start {
+  display: flex;
+  align-items: flex-start;
+}
+
+.flex-a-end {
+  display: flex;
+  align-items: flex-end;
+}
+
+// 两端居中对其
+.flex-ac-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// 垂直、水平居中
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// 两端对齐
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+// 垂直排列
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+// 横向排列
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+// flex换行
+.flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+// flex子级居中对其
+.flex-evenly {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+// flex子级均分居中
+.flex-around {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+// flex不换行
+.flex-nowrap {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+// 防止flex压缩变形
+.flexs0 {
+  flex-shrink: 0;
+}
+
+// 文字居中
+.textcenter,.text-center {
+  text-align: center;
+}
+
+// 文字靠右
+.textright,.text-right {
+  text-align: right;
+}
+
+// 文字靠左
+.textleft,.text-left  {
+  text-align: left;
+}
+
+
+
+// 文字两端对齐
+.text-justify{
+    text-align: justify;
+}
+
+// 超出隐藏
+.overh {
+  overflow: hidden;
+}
+
+// 怪异盒子模型
+.bbx,
+view {
+  box-sizing: border-box;
+}
+
+// 50%圆角
+.br-50p {
+  border-radius: 50%;
+}
+
+.pr {
+  position: relative;
+}
+
+.pa {
+  position: absolute;
+}
+
+.pf {
+  position: fixed;
+}
+
+.pacenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// 自定义吸顶样式
+.sticky {
+  position: sticky;
+  z-index: 1;
+}
+
+// ios底部安全距离-padding
+.savepadding {
+  padding-bottom: max(constant(safe-area-inset-bottom), 20rpx); /* iOS 11.0 */
+  padding-bottom:  max(env(safe-area-inset-bottom), 20rpx); /* iOS 11.2 */
+}
+
+// ios底部安全距离-bottom
+.savebottom {
+  bottom: max(env(safe-area-inset-bottom), 20rpx);
+}
+
+.width-full {
+  width: 100%;
+}
+
+.width-full-screen {
+  width: 100vw;
+}
+
+.height-full {
+  height: 100%;
+}
+
+.height-full-screen {
+  height: 100vh;
+}
+
+.line-through {
+  text-decoration: line-through;
+}
+
+// 块级元素
+.block {
+  display: block;
+}
+
+// 行内元素
+.inline {
+  display: inline;
+}
+
+// 行内块元素
+.inline-block {
+  display: inline-block;
+}
+
+// 弹性布局
+.flex {
+  display: flex;
+}
+
+// 行内弹性布局
+.inline-flex {
+  display: inline-flex;
+}
+
+// 网格布局
+.grid {
+  display: grid;
+}
+
+// 行内网格布局
+.inline-grid {
+  display: inline-grid;
+}
+
+// 表格布局
+.table {
+  display: table;
+}
+
+// 隐藏元素
+.none {
+  display: none;
+}
+
+.nowrap{
+	white-space: nowrap;
+}
+
+.break-all{
+	word-break: break-all;
+}
+
+// 边框、分割线
+.top-line {
+	border-top: 2rpx solid #E1E1E1;
+}
+.bot-line {
+	border-bottom: 2rpx solid #E1E1E1;
+}
+.bot-right {
+	border-right: 2rpx solid #E1E1E1;
+}
+.bot-left {
+	border-left: 2rpx solid #E1E1E1;
+}
+.border-main {
+	border: 2rpx solid #dad1d1;
+}
+.border-b {
+	border: 2rpx solid #2F85FC;
+}
+.border-r {
+	border: 2rpx solid #F54E52;
+}
+.border-f {
+	border: 2rpx solid #f6f6f6;
+}
+
+// 滚动通知 清除边距
+:deep(.u-notice-bar) {
+	padding: 0 !important;
+}

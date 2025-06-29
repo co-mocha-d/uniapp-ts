@@ -78,5 +78,43 @@
         "unplugin-auto-import": "^19.1.2",
         "vite": "5.2.8",
         "vue-tsc": "^1.0.24"
+    },
+    "uni-app": {
+        "scripts": {
+            "mp-weixin-dev": {
+                "title": "微信小程序-测试环境",
+                "env": {
+                    "MODE": "development",
+                    "UNI_PLATFORM": "mp-weixin",
+                    "VITE_BASE_API": "http://localhost:2021/"
+                }
+            },
+            "mp-weixin-prod": {
+                "title": "微信小程序-正式环境",
+                "env": {
+                    "MODE": "production",
+                    "UNI_PLATFORM": "mp-weixin",
+                    "VITE_BASE_API": ""
+                }
+            },
+            "h5-dev": {
+                "title": "H5-测试环境",
+                "browser": "chrome",
+                "env": {
+                    "MODE": "development",
+                    "UNI_PLATFORM": "h5",
+                    "VITE_BASE_API": "http://localhost:2021/"
+                }
+            },
+            "h5-prod": {
+                "title": "H5-正式环境",
+                "browser": "chrome",
+                "env": {
+                    "MODE": "production",
+                    "UNI_PLATFORM": "h5",
+                    "VITE_BASE_API": ""
+                }
+            }
+        }
     }
 }

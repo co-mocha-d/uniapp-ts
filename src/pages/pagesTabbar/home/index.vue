@@ -10,6 +10,10 @@
 
                 <view @click="clickHandle">点击我</view>
                 <view @click="goOther">跳转</view>
+                <view @click="fd_handle">防抖</view>
+                <view @click="jl_handle">节流</view>
+
+
                 <view>底部</view>
 
             </scroll-view>
@@ -28,6 +32,18 @@
     const clickHandle = () => {
         console.log(myInputRef.value)
         myInputRef.value?.onClear()
+    }
+
+    const fd_handle = () => {
+        uni.$u.debounce(() => {
+            console.log('fd_handle')
+        }, 1000)
+    }
+
+    const jl_handle = () => {
+        uni.$u.throttle(() => {
+            console.log('jl_handle')
+        }, 1000)
     }
 
     const inputChange = (val) => {

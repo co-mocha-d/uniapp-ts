@@ -1,0 +1,142 @@
+$flex: 10;
+@while $flex >0 {
+  .flex-#{$flex} {
+    flex: $flex;
+  }
+
+  $flex: ($flex - 1);
+}
+
+//  快捷边距  字体大小    如 p-x-20  p-x-20 p-l-20  x:横向 x纵向  l左边 r右边   fz-20字体大小 20rpx
+$counter: 50;
+// 最小字体大小单位
+$minFontSize: 16; 
+// z-index的最大值
+$maxZIndex: 10; 
+
+
+@while $counter >=0 {
+  .p-#{$counter} {
+    padding: (1rpx * $counter);
+  }
+
+  .p-t-#{$counter} {
+    padding-top: (1rpx * $counter);
+  }
+
+  .p-r-#{$counter} {
+    padding-right: (1rpx * $counter);
+  }
+
+  .p-b-#{$counter} {
+    padding-bottom: (1rpx * $counter);
+  }
+
+  .p-l-#{$counter} {
+    padding-left: (1rpx * $counter);
+  }
+
+  .p-x-#{$counter} {
+    padding-left: (1rpx * $counter);
+    padding-right: (1rpx * $counter);
+  }
+
+  .p-y-#{$counter} {
+    padding-top: (1rpx * $counter);
+    padding-bottom: (1rpx * $counter);
+  }
+
+  .m-#{$counter} {
+    margin: (1rpx * $counter);
+  }
+
+  .m-t-#{$counter} {
+    margin-top: (1rpx * $counter);
+  }
+
+  .m-r-#{$counter} {
+    margin-right: (1rpx * $counter);
+  }
+
+  .m-b-#{$counter} {
+    margin-bottom: (1rpx * $counter);
+  }
+
+  .m-l-#{$counter} {
+    margin-left: (1rpx * $counter);
+  }
+
+  .m-x-#{$counter} {
+    margin-left: (1rpx * $counter);
+    margin-right: (1rpx * $counter);
+  }
+
+  .m-y-#{$counter} {
+    margin-top: (1rpx * $counter);
+    margin-bottom: (1rpx * $counter);
+  }
+
+	// 字体大小 (从最小字体大小开始)
+  @if $counter >= $minFontSize {
+	.fs-#{$counter} {
+		font-size: (1rpx * $counter);
+	}
+  }
+
+  .lh-#{$counter} {
+    line-height: (1rpx * $counter);
+  }
+
+  // z-index (限制最大值)
+  @if $counter <= $maxZIndex {
+	.z-#{$counter} {
+	    z-index: $counter;
+	}
+  }
+
+  .width-#{$counter} {
+    width: (1rpx * $counter);
+  }
+
+  .height-#{$counter} {
+    height: (1rpx * $counter);
+  }
+
+  .width-#{$counter}p {
+    width: (1% * $counter);
+  }
+
+  .height-#{$counter}p {
+    height: (1% * $counter);
+  }
+
+  .width-#{$counter}vw {
+    width: (1vw * $counter);
+  }
+
+  .height-#{$counter}vh {
+    height: (1vh * $counter);
+  }
+
+  .br-#{$counter} {
+    border-radius: (1rpx * $counter);
+  }
+
+  .top-#{$counter} {
+    top: (1rpx * $counter);
+  }
+
+  .bottom-#{$counter} {
+    bottom: (1rpx * $counter);
+  }
+
+  .left-#{$counter} {
+    left: (1rpx * $counter);
+  }
+
+  .right-#{$counter} {
+    right: (1rpx * $counter);
+  }
+
+  $counter: ($counter - 1);
+}
