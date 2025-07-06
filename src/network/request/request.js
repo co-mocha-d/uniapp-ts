@@ -1,11 +1,11 @@
 import {
     mergeConfig,
     dispatchRequest,
-    jsonpRequest
+    jsonpRequest,
+    getType,
+    deepCompare
 } from "./utils.js";
-import $cache from '../hdCache.js'
-import getType from '../getType.js'
-import deepCompare from '../equal.js'
+import $cache from './cache.js'
 
 /**
  * 对象深拷贝
@@ -23,6 +23,8 @@ export function deepClone (obj) {
     }
     return objClone
 }
+
+const CACHE_LIVETIME = 0 // 缓存时间
 
 
 export default class request {
@@ -94,8 +96,6 @@ export default class request {
     }
     //接口请求方法
     async request (data) {
-        console.log('data=====', data)
-
         // 请求数据
         let requestInfo,
             // 是否运行过请求开始钩子
@@ -134,27 +134,25 @@ export default class request {
 
 
             const { cache = false, refreshCache = false, url, data: params } = data
-            console.log('params===', params)
 
             /* 在此处拦截 优先读取缓存**/
             let cacheUrl = url
-            console.log('cacheUrl===', cacheUrl)
             let cacheParams = deepClone(params)
             // cacheParams = qs.stringify({ encrypt_data: EncryptAES(cacheParams) }, { arrayFormat: 'indices', })
 
             if (!refreshCache && (cache || getType(cache) === 'number')) {
-                let cacheData = $cache.get(cacheUrl)
+                let cacheData = $cache.get(cacheUrl, cacheParams) || []
 
-                console.log('cacheData ====', cacheData)
-                let cacheList = $cache.get('co_cache_url') || []
-                let newCacheList = cacheList.filter(v => v !== cacheUrl)
-                newCacheList.push(cacheUrl)
-                $cache.set('co_cache_url', newCacheList)
-                if (cacheData && getType(cacheData) === 'array') {
-                    let targetData = cacheData.filter(v => {
+                // let cacheList = $cache.get('co_cache_url').data || []
+                // console.log('cacheList ====', cacheList)
+
+                // let newCacheList = cacheList.filter(v => v !== cacheUrl)
+                // newCacheList.push(cacheUrl)
+                // $cache.set('co_cache_url', newCacheList)
+                if (!cacheData.isTimeout && cacheData.data && getType(cacheData.data) === 'array') {
+                    let targetData = cacheData.data.filter(v => {
                         return v.params && deepCompare(v.params, cacheParams)
                     })
-                    console.log('targetData===', targetData)
 
                     if (targetData && targetData.length > 0) {
                         let resultData = {}
@@ -164,8 +162,6 @@ export default class request {
                         // } else {
                         resultData = targetData[0]['data']
                         // }
-
-                        console.log('resultData===', resultData)
 
                         console.log(`%c [${cacheUrl}请求参数]`, 'font-size:13px; background:#fff; color:#3498db;', params)
                         console.log(`%c [${cacheUrl}缓存数据]`, 'font-size:13px; background:#fff; color:#3498db;', resultData)
@@ -195,26 +191,36 @@ export default class request {
                     response: requestResult
                 });
 
-                console.log('result===', result)
-
-
                 if (cache || getType(cache) === 'number') {
 
                     if (refreshCache) {
                         $cache.remove(cacheUrl)
                     }
                     // 缓存
-                    let cacheData = $cache.get(cacheUrl)
+                    let cacheData = $cache.get(cacheUrl, cacheParams).data || []
+                    let cacheIndex = cacheData.findIndex(v => {
+                        return v.params && deepCompare(v.params, cacheParams)
+                    })
+
+                    let createTime = Date.now()
                     if (cacheData && getType(cacheData) == 'array') {
-                        cacheData.push({
-                            params: cacheParams,
-                            data: result || ''
-                        })
+                        if (cacheIndex !== -1) {
+                            cacheData[cacheIndex].data = result
+                            cacheData[cacheIndex].createTime = createTime
+                        } else {
+                            cacheData.push({
+                                params: cacheParams,
+                                data: result || [],
+                                createTime: createTime
+                            })
+                        }
+
                         $cache.set(cacheUrl, cacheData, getType(cache) === 'number' ? cache : CACHE_LIVETIME)
                     } else {
                         cacheData = [{
                             params: cacheParams,
-                            data: result || ''
+                            data: result || [],
+                            createTime: createTime
                         }]
                         $cache.set(cacheUrl, cacheData, getType(cache) === 'number' ? cache : CACHE_LIVETIME)
                     }

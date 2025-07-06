@@ -4,8 +4,9 @@
             <view class="title">{{ title }}</view>
         </view>
 
-        {{ title }}
         {{userStore.token}}
+
+        <view @click="handleClick">获取接口</view>
 
         <!-- 其他页面内容 -->
         <co-tabbar :activeColor="'#FF5722'" :inactiveColor="'#999999'" :safeAreaInsetBottom="true" />
@@ -18,31 +19,31 @@
 
     const title = ref('Hello')
 
+    const page = ref(0)
 
-    onMounted(() => {
+    const handleClick = () => {
+        page.value += 1
         let url = uni.$urls.common.getArticle
         console.log(uni.$urls.common.getArticle)
         uni.$doHttp.get(url, {
-            current: 1,
-            size: 5,
+            current: page.value,
+            size: 1 * 2,
             status: true
         }, {
-            cache: 1 * 60,
+            cache: 1 * 30,
         }).then((res) => {
             console.log('res-----', res)
         }).catch((err) => {
             console.log(err)
         })
+
+    }
+
+    onMounted(() => {
+        handleClick()
     })
-
-
 </script>
 
 <style>
-    .content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
+    .content {}
 </style>

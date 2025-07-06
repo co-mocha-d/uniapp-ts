@@ -13,7 +13,6 @@ import { useUserStore } from '@/store/index' // 导入pinia状态管理配置
 
 // 全局配置的请求域名
 const baseUrl = process.env.VITE_BASE_API || import.meta.env.VITE_BASE_API; // 接口地址域名
-const CACHE_LIVETIME = 60 // 缓存时间
 
 /**
  * 清除字符串的空格
