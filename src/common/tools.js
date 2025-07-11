@@ -205,21 +205,6 @@ export default {
         return imgUrl
     },
 
-    // 点击广告跳转
-    jumpAdvUrl (linkUrl) {
-        if (linkUrl?.startsWith('http')) {
-            // 打开web地址
-            this.gotoWebview(linkUrl);
-        } else if (linkUrl?.startsWith('/pages')) {
-            // 跳转内部路由
-            uni.navigateTo({
-                url: linkUrl
-            })
-        } else {
-            console.log('暂不兼容：' + linkUrl)
-        }
-    },
-
     // 拨打电话
     callPhone (phoneNum) {
         if (phoneNum.length > 0) {
@@ -249,23 +234,6 @@ export default {
             top: top
         }
     },
-    /**
-     * 判断底部表彰icon是否需要展示 去点赞图标
-     */
-    getMyFavor (params) {
-        // 获取统计状态管理
-        const statisticsStore = useStatisticsStore()
-        console.log(uni.$urls.honour);
-        let url = uni.$urls.honour.getMyFavor
-        uni.$doHttp
-            .post(url, { date: params?.date || '' }, {
-                load: false
-            })
-            .then((res) => {
-                const status = res?.is_show_favor_icon == 1
-                statisticsStore.setIsShowFavorIcon(status)
-            })
-    }
 }
 
 
