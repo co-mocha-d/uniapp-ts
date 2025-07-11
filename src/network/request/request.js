@@ -140,15 +140,22 @@ export default class request {
             let cacheParams = deepClone(params)
             // cacheParams = qs.stringify({ encrypt_data: EncryptAES(cacheParams) }, { arrayFormat: 'indices', })
 
+            // 区分大小写的排序（基于 ASCII）
+            const sortedKeys = Object.keys(cacheParams).sort((a, b) =>
+                a.localeCompare(b, undefined, { sensitivity: 'variant' })
+            );
+
+            cacheParams = Object.fromEntries(sortedKeys.map(key => [key, cacheParams[key]]));
+
+            cacheParams =  qs.stringify({ encrypt_data: EncryptAES(cacheParams) }, { arrayFormat: 'indices', })
+
             if (!refreshCache && (cache || getType(cache) === 'number')) {
                 let cacheData = $cache.get(cacheUrl, cacheParams) || []
 
-                // let cacheList = $cache.get('co_cache_url').data || []
-                // console.log('cacheList ====', cacheList)
-
-                // let newCacheList = cacheList.filter(v => v !== cacheUrl)
-                // newCacheList.push(cacheUrl)
-                // $cache.set('co_cache_url', newCacheList)
+                let cacheList = $cache.get('co_cache_url').data || []
+                let newCacheList = cacheList.filter(v => v !== cacheUrl)
+                newCacheList.push(cacheUrl)
+                $cache.set('co_cache_url', newCacheList)
                 if (!cacheData.isTimeout && cacheData.data && getType(cacheData.data) === 'array') {
                     let targetData = cacheData.data.filter(v => {
                         return v.params && deepCompare(v.params, cacheParams)

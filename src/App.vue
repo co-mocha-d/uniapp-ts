@@ -2,11 +2,30 @@
     import { onLaunch, onShow, onHide } from "@dcloudio/uni-app";
     onLaunch(() => {
         console.log("App Launch");
+        // #ifdef APP-PLUS
+        // 获取分享服务：解决Android启动时第一次打开三方应用失败问题
+        plus.share.getServices();
+        // #endif
 
-        // uni.hideTabBar();
     });
     onShow(() => {
         console.log("App Show");
+
+
+        // #ifdef MP
+        try {
+            const storageInfo = uni.getStorageInfoSync();
+            const hd_cache_url = uni.getStorageSync('co_cache_url');
+            if (storageInfo.currentSize > 8 * 1024 * 1024) {
+                if (hd_cache_url && hd_cache_url.data && Array.isArray(hd_cache_url.data)) {
+                    hd_cache_url.data.forEach(e => {
+                        uni.removeStorageSync(e)
+                    });
+                }
+            }
+        } catch (error) {
+        }
+        // #endif
     });
     onHide(() => {
         console.log("App Hide");
