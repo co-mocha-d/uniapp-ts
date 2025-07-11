@@ -17,9 +17,8 @@ function isTimeout (name, params) {
     })
 
     if (!targetData?.[0]) return false
-
     const overTime = (currentTime - targetData[0].createTime) / 1000
-    // console.log('overTime===', overTime)
+
     if (overTime > data.timeout) {
         // try {
         //     uni.removeStorageSync(name)

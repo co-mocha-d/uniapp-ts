@@ -1,13 +1,6 @@
 import request from "./request/index";
 import { useUserStore } from '@/store/index' // 导入pinia状态管理配置
 // import {
-// 	DecryptAES,
-// 	EncryptAES,
-// 	KEY,
-// 	IVS,
-// 	DecryptAESKey
-// } from './encrypt.js' // 加解密
-// import {
 // 	toLogin
 // } from "../common/tools";
 
@@ -69,27 +62,8 @@ $http.requestStart = function (options) {
     myToken = myToken.replace(/\"/g, "");
     options.header['token'] = myToken;
     options.header['X-Requested-With'] = 'XMLHttpRequest';
-    // 正式服或者APP跳转过来的才数据加密
-    // if (import.meta.env.MODE != "development" || userStore?.enterFrom == 'app') {
-    //     console.log(`🫣[ 请求地址 ] %c${options?.url}`, 'background: #999; padding:5px 8px; border-radius: 5px;')
-    //     console.log('🫣[ 请求参数 ]', options.data)
+    // 加密处理-------todo
 
-    //     // 传递IVS 和 KEY
-    //     options.header["IVS"] = EncryptAES(IVS);
-    //     options.header["KEY"] = EncryptAES(KEY);
-    //     // data数据加密
-    //     let dataEncryption = {}
-    //     if (typeof options.data !== 'undefined' && Object.keys(options.data).length > 0) {
-    //         // 对象存在
-    //         dataEncryption = encodeURIComponent(EncryptAES(options.data))
-    //     } else {
-    //         // 对象不存在
-    //         dataEncryption = encodeURIComponent(EncryptAES({
-    //             v: '3'
-    //         }))
-    //     }
-    //     options.data = 'datas=' + dataEncryption
-    // }
     return options; // return false 表示请求拦截，不会继续请求
 }
 
@@ -110,22 +84,9 @@ $http.dataFactory = async function (res) {
     console.log('res=========', res)
 
     const userStore = useUserStore() // pinia用户模块数据对象
-    // 正式服或者APP跳转过来的才解密
-    // if (import.meta.env.MODE != "development" || userStore?.enterFrom == 'app') {
-    //     let IVSThis, KEYThis;
-    //     //通过解密获取后端返回在 header 的IV
-    //     IVSThis = DecryptAESKey(res.response.header.Iv)
-    //     //通过解密获取后端返回在 header 的key
-    //     KEYThis = DecryptAESKey(res.response.header.Key)
-    //     //#ifdef H5
-    //     //通过解密获取后端返回在 header 的IV
-    //     IVSThis = DecryptAESKey(res.response.header.iv)
-    //     //通过解密获取后端返回在 header 的key
-    //     KEYThis = DecryptAESKey(res.response.header.key)
-    //     //#endif
-    //     // 解密数据
-    //     res.response.data = DecryptAES(trim(res.response.data.datas), IVSThis, KEYThis)
-    // }
+    // 解密处理-------todo
+
+
     if (res.response.statusCode && res.response.statusCode == 200) {
         let httpData = res.response.data;
         if (typeof (httpData) == "string") {
